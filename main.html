@@ -1,248 +1,455 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="shortcut icon" href="" type="image/x-icon" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta property="og:title" content="EDITH-MD QR/Pair Code">
+    <meta property="og:description" content="QR-code and Pair-code linker for EDITH-MD bot.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/EDITH-Bandaheali/EDITH-MD/Fork">
+    <meta property="og:image" content="images/2nrSWv9.jpg">
+    <title>EDITH-MD PAIR WEB</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Graduate&family=Gruppo&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-      color: white;
-      flex-direction: column;
-      position: relative;
-      background: linear-gradient(-45deg, #0f0, #00f, #f0f, #f00);
-      background-size: 400% 400%;
-      animation: bgGlow 10s ease infinite;
-    }
+        :root {
+            --neon-color: #00FFEA;
+            --neon-glow: 0 0 15px #00FFEA, 0 0 30px #00FFEA;
+            --button-font-size: clamp(0.9rem, 3vw, 1rem);
+            --header-font-size: clamp(1.8rem, 6vw, 3rem);
+            --quote-font-size: clamp(0.9rem, 3vw, 1.1rem);
+            --glass-bg: rgba(0, 0, 0, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
 
-    @keyframes bgGlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+        /* Neon Rainbow Background */
+        body {
+            font-family: 'Graduate', sans-serif;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffbb, #0033ff, #a200ff, #ff00a2);
+            background-size: 400% 400%;
+            animation: neonBackground 15s linear infinite;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
 
-    .dot {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0;
-      animation: blink 1.5s infinite;
-    }
+        @keyframes neonBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    @keyframes blink {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
-    }
+        /* Glassmorphism Container */
+        .container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+        }
 
-    .github-stats {
-      position: absolute;
-      top: 10px;
-      display: flex;
-      gap: 15px;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 10px 20px;
-      border-radius: 12px;
-      border: 2px solid #00ffff;
-      box-shadow: 0 0 10px #00ffff;
-      font-weight: bold;
-      font-size: 16px;
-      animation: glowStats 3s infinite ease-in-out;
-      z-index: 20;
-    }
+        /* Header */
+        .header {
+            font-size: var(--header-font-size);
+            font-weight: bold;
+            color: var(--neon-color);
+            text-shadow: var(--neon-glow);
+            margin-bottom: 20px;
+            animation: flicker 1.5s infinite alternate;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 25px;
+            border-radius: 15px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
 
-    .github-stats span {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(0, 255, 234, 0.1),
+                rgba(0, 255, 234, 0)
+            );
+            transform: rotate(30deg);
+            z-index: -1;
+        }
 
-    .github-stats span:hover {
-      transform: scale(1.1);
-      transition: 0.2s;
-    }
+        @keyframes flicker {
+            0%, 100% { 
+                text-shadow: var(--neon-glow);
+                box-shadow: 0 0 20px rgba(0, 255, 234, 0.5);
+            }
+            50% { 
+                text-shadow: none;
+                box-shadow: none;
+            }
+        }
 
-    @keyframes glowStats {
-      0%, 100% { box-shadow: 0 0 10px #00ffff; }
-      50% { box-shadow: 0 0 20px #ff00ff; }
-    }
+        /* Quote */
+        .quote {
+            font-size: var(--quote-font-size);
+            font-style: italic;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            position: relative;
+        }
 
-    .github-box {
-      margin-top: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid;
-      border-radius: 12px;
-      padding: 10px 20px;
-      background: rgba(0, 0, 0, 0.6);
-      animation: githubBorderGlow 6s linear infinite;
-      box-shadow: 0 0 10px #0ff;
-      z-index: 10;
-    }
+        .quote::before, .quote::after {
+            content: '"';
+            color: var(--neon-color);
+            font-size: 1.5em;
+            position: absolute;
+        }
 
-    .github-box a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-    }
+        .quote::before {
+            top: 0;
+            left: 10px;
+        }
 
-    @keyframes githubBorderGlow {
-      0% { border-color: #ff00ff; box-shadow: 0 0 10px #ff00ff; }
-      25% { border-color: #00ffff; box-shadow: 0 0 10px #00ffff; }
-      50% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
-      75% { border-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
-      100% { border-color: #ff00ff; box-shadow: 0 0 10px #ff00ff; }
-    }
+        .quote::after {
+            bottom: -15px;
+            right: 10px;
+        }
 
-    .button-container {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 70px;
-      z-index: 10;
-    }
+        /* Button Container */
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            width: 100%;
+            margin: 20px 0;
+        }
 
-    h3 {
-      margin-bottom: 50px;
-      font-size: 28px;
-      font-weight: bold;
-      letter-spacing: 2px;
-      background: linear-gradient(45deg, #ff00ff, #00ffff, #ff0000, #00ff00);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      color: transparent;
-      animation: rainbowText 6s infinite ease-in-out;
-    }
+        /* Neon Button Styling */
+        .neon-button {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-size: var(--button-font-size);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            padding: 15px 20px;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffbb, #0033ff, #a200ff, #ff00a2) 1;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease-in-out;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            z-index: 1;
+            text-decoration: none;
+        }
 
-    @keyframes rainbowText {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+        .neon-button i {
+            font-size: 1.2em;
+        }
 
-    .button {
-      width: 160px;
-      height: 45px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 0px 15px;
-      border-radius: 10px;
-      position: relative;
-      cursor: pointer;
-      font-weight: 900;
-      text-decoration: none;
-      color: white;
-      background: #000;
-      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-      border: 2px solid transparent;
-      animation: colorfulBorder 4s infinite linear;
-    }
+        .neon-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
 
-    @keyframes colorfulBorder {
-      0% { border-color: #ff00ff; box-shadow: 0 0 10px #ff00ff; }
-      25% { border-color: #00ffff; box-shadow: 0 0 10px #00ffff; }
-      50% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
-      75% { border-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
-      100% { border-color: #ff00ff; box-shadow: 0 0 10px #ff00ff; }
-    }
+        .neon-button:hover::before {
+            left: 100%;
+        }
 
-    .button:hover {
-      transform: scale(1.1);
-    }
+        .neon-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 234, 0.4);
+        }
 
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #222;
-      color: #fff;
-      padding: 10px 0;
-      text-align: center;
-      font-size: 14px;
-      z-index: 10;
-    }
-  </style>
+        .neon-button:active {
+            transform: translateY(1px);
+        }
+
+        /* Footer */
+        .footer {
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            border-top: 2px solid;
+            border-image: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffbb, #0033ff, #a200ff, #ff00a2) 1;
+            animation: neonBorderGlow 3s infinite alternate;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* Footer Neon Animation */
+        @keyframes neonBorderGlow {
+            0% {
+                border-image-source: linear-gradient(90deg, #ff0000, #ff7300, #fffb00);
+            }
+            50% {
+                border-image-source: linear-gradient(90deg, #48ff00, #00ffbb, #0033ff);
+            }
+            100% {
+                border-image-source: linear-gradient(90deg, #a200ff, #ff00a2, #ff0000);
+            }
+        }
+
+        .footer-link {
+            color: var(--neon-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-link:hover {
+            color: #fffb00;
+            text-shadow: 0 0 10px #fffb00;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: var(--neon-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .footer-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Media Queries for Mobile Optimization */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                width: 95%;
+            }
+            
+            .button-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 12px 20px;
+                font-size: clamp(1.5rem, 6vw, 2rem);
+            }
+            
+            .quote {
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+            
+            .neon-button {
+                padding: 12px 15px;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 5px solid transparent;
+            border-top-color: var(--neon-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
+    <div class="loader">
+        <div class="loader-circle"></div>
+    </div>
 
-  <!-- Live Dots -->
-  <script>
-    for (let i = 0; i < 80; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dot");
-      dot.style.top = `${Math.random() * 100}vh`;
-      dot.style.left = `${Math.random() * 100}vw`;
-      dot.style.animationDelay = `${Math.random() * 2}s`;
-      document.body.appendChild(dot);
-    }
-  </script>
+    <div class="particles" id="particles"></div>
 
-  <!-- GitHub Stars and Forks -->
-  <div class="github-stats" id="stats">
-    <span>⭐ Stars: <span id="stars">...</span></span>
-    <span>🎖️ Forks: <span id="forks">...</span></span>
-  </div>
+    <div class="container">
+        <div class="header">EDITH-MD</div>
 
-  <!-- Main Buttons Section -->
-  <div class="button-container">
-    <h3>SHABAN-MD</h3>
-    <a href="/qr" class="button" target="_blank"><span>QR-CODE</span></a> <br>
-    <a href="/pair" class="button" target="_blank"><span>PAIRING-CODE</span></a> <br>
-    <a href="https://github.com/MRSHABAN45/SHABAN-MD/fork" class="button" target="_blank"><span>FORK SHABAN MD</span></a> <br>
-    <a href="https://whatsapp.com/channel/0029VazjYjoDDmFZTZ9Ech3O" class="button" target="_blank"><span>WhatsApp</span></a> <br>
-    <a href="https://wa.me/923043788282" class="button" target="_blank"><span>ADMIN</span></a> <br>
-  </div>
+        <div class="quote">The secret of success is to be ready when your opportunity comes.</div>
 
-  <!-- GitHub Profile Box -->
-  <div class="github-box">
-    <a href="https://github.com/MRSHABAN42" target="_blank">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="24" viewBox="0 0 24 24" width="24">
-        <path d="M12 0C5.37 0 0 5.38 0 12.03c0 5.31 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.09-.75.08-.74.08-.74 1.2.08 1.83 1.24 1.83 1.24 1.07 1.84 2.8 1.31 3.49 1.01.11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.39 1.24-3.23-.12-.3-.54-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.38 11.38 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.23 0 4.63-2.81 5.66-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12.02 12.02 0 0 0 24 12.03C24 5.38 18.63 0 12 0z"/>
-      </svg>
-      <span>@MRSHABAN42</span>
-    </a>
-  </div>
+        <div class="button-container">
+            <a href="/checker" class="neon-button">
+                <i class="fas fa-qrcode"></i> QR Code
+            </a>
+            <a href="/check" class="neon-button">
+                <i class="fas fa-link"></i> Pair Code
+            </a>
+            <a href="https://contact.bandaheali.site" class="neon-button">
+                <i class="fas fa-file-archive"></i> Contact Owner
+            </a>
+            <a href="https://github.com/Bandah-E-Ali/Edith-MD" class="neon-button">
+                <i class="fab fa-github"></i> GitHub Repo
+            </a>
+            <a href="https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P" class="neon-button" onclick="alert('Must Follow The Channel')">
+                <i class="fab fa-whatsapp"></i> WhatsApp Channel
+            </a>
+        </div>
+    </div>
 
-  <footer>
-    MR-SHABAN &copy; <span id="currentYear"></span>
-  </footer>
+    <div class="footer">
+        Made with <i class="fas fa-heart" style="color: #ff0000;"></i> by <a href="https://whatsapp.com/channel/0029VajGHyh2phHOH5zJl73P" class="footer-link">BANDAHEALI</a> © 2025 - <span id="currentYear">2025</span> All rights reserved.
+    </div>
 
-  <script>
-    document.getElementById("currentYear").textContent = new Date().getFullYear();
-
-    // Fetch GitHub Repo Stats
-    fetch("https://api.github.com/repos/MRSHABAN45/SHABAN-MD")
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("stars").textContent = data.stargazers_count;
-        document.getElementById("forks").textContent = data.forks_count;
-      })
-      .catch(err => {
-        document.getElementById("stars").textContent = "N/A";
-        document.getElementById("forks").textContent = "N/A";
-        console.error("GitHub API error:", err);
-      });
-  </script>
-
+    <script>
+        // Set current year
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+        
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 30 : 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 2px and 5px
+                const size = Math.random() * 3 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation duration
+                const duration = Math.random() * 15 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Loading animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.loader').classList.add('hidden');
+                createParticles();
+            }, 1000);
+        });
+        
+        // Add ripple effect to buttons
+        document.querySelectorAll('.neon-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // For WhatsApp Channel button that has onclick handler
+                if (this.getAttribute('onclick')) return;
+                
+                const x = e.clientX - e.target.getBoundingClientRect().left;
+                const y = e.clientY - e.target.getBoundingClientRect().top;
+                
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 1000);
+            });
+        });
+    </script>
 </body>
 </html>

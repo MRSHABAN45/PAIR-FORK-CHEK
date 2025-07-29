@@ -1,178 +1,497 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1737874207490861"
             crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHABAN-MD QR</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&amp;display=swap" rel="stylesheet">
-    <title>QR</title>
+    <title>EDITH-MD QR SCANNER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .bg {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-size: 400% 400%;
-            animation: AnimateBG 25s ease infinite;
-        }
-
-        @keyframes AnimateBG {
-            0% {
-                background-position: 0% 50%
-            }
-
-            50% {
-                background-position: 100% 50%
-            }
-
-            100% {
-                background-position: 0% 50%
-            }
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Outfit";
-            background: linear-gradient(-45deg, #4a90e2, #3ac569, #9b59b6, #e74c3c);
-            background-size: 400% 400%;
-            animation: gradient 10s ease infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        jsl.code {
-            overflow: hidden;
-            background: linear-gradient(-45deg, #f1c40f, #3498db, #2ecc71, #e74c3c);
-            background-size: 400% 400%;
-            animation: gradient 8s ease infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            font-family: 'Montserrat', sans-serif;
-            height: 110vh;
-            margin: 0px;
-
-        }
-
-        p.legend {
-            color: #fff;
-            font-size: 1em;
-            font-weight: 400;
-            padding: 0em 1.1em;
-            margin-top: 0.1em;
+        :root {
+            --primary-color: #00ffea;
+            --secondary-color: #00a1ff;
+            --accent-color: #ff0066;
+            --vip-gold: #ffd700;
+            --dark-bg: #0a0a15;
+            --darker-bg: #050510;
+            --text-color: #e0e0ff;
+            --neon-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+            --hologram-gradient: linear-gradient(135deg, rgba(0,255,234,0.1) 0%, rgba(0,161,255,0.1) 50%, rgba(255,0,102,0.1) 100%);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 255, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 161, 255, 0.1) 0%, transparent 50%),
+                linear-gradient(to bottom, var(--darker-bg), var(--dark-bg));
             overflow: hidden;
+            position: relative;
         }
 
-        :root {
-            --main-color: hsl(212, 45%, 89%);
-            --principalText-color: hsl(218, 44%, 22%);
-            --secondText-color: hsl(220, 15%, 55%);
+        .vip-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, var(--vip-gold), #ff8800);
+            color: black;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transform: rotate(15deg);
+            box-shadow: 0 0 15px var(--vip-gold);
+            z-index: 100;
+            animation: pulse 2s infinite;
         }
 
-        #content {
+        @keyframes pulse {
+            0% { transform: rotate(15deg) scale(1); }
+            50% { transform: rotate(15deg) scale(1.1); }
+            100% { transform: rotate(15deg) scale(1); }
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 234, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 161, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 255, 234, 0.7);
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: float-particle linear infinite;
+        }
+
+        .particle:nth-child(3n+1) {
+            background: rgba(0, 161, 255, 0.7);
+        }
+
+        .particle:nth-child(3n+2) {
+            background: rgba(255, 0, 102, 0.7);
+        }
+
+        .holographic-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--hologram-gradient);
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+            animation: hologramScan 15s linear infinite;
+        }
+
+        .vip-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            animation: glow-pulse 3s infinite alternate;
+        }
+
+        @keyframes glow-pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
-            width: 22rem;
-            text-align: center;
-            background-color: #000000;
-            padding: 1rem;
-            border-radius: 14px;
+            align-items: center;
+            background: rgba(10, 10, 21, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 234, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 234, 0.2);
+            animation: containerGlow 4s ease-in-out infinite alternate;
         }
 
-        #QR-content img {
-            border-radius: 10px;
-            width: 20rem;
+        #qr-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        #qr-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px var(--accent-color);
         }
 
         #title-container {
-            padding: 1rem 1rem 0 1rem;
-            color: #fff;
-            font-weight: 700;
             margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        #main {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        #main::after {
+            content: 'EDITH-MD';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            padding: 2px 15px;
+            border-radius: 15px;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: bold;
+        }
+
+        #legend {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            letter-spacing: 1px;
+            margin-top: 30px;
+        }
+
+        .quote {
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--text-color);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            margin: 15px 0;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border-left: 3px solid var(--primary-color);
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            color: var(--primary-color);
+            font-size: 2em;
+            position: absolute;
+            left: 5px;
+            top: 5px;
+        }
+
+        .quote::after {
+            content: '"';
+            color: var(--primary-color);
+            font-size: 2em;
+            position: absolute;
+            right: 5px;
+            bottom: -15px;
         }
 
         #description-container {
-            padding: 0 2.5rem 0 2.5rem;
-            color: #fff;
-            margin-bottom: 2rem;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
         }
 
-        #p-legend {
-            font-size: 1em;
-            font-weight: 400;
-            padding: 0em 1.1em;
-            margin-top: 0.1em;
+        progress {
+            width: 100%;
+            height: 8px;
+            margin: 1rem 0;
+            border: none;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        progress::-webkit-progress-bar {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        progress::-webkit-progress-value {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--primary-color);
         }
 
         .reload-button {
             display: inline-block;
-            padding: 10px 20px;
-            background-color: #3498db; /* Blue color */
-            color: #fff; /* White text color */
+            padding: 12px 30px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            border-radius: 50px;
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .reload-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .reload-button:hover {
-            background-color: #2980b9; /* Darker blue color on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--primary-color);
+            color: white;
+        }
+
+        .reload-button:hover::before {
+            opacity: 0.3;
+        }
+
+        .footer {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+        }
+
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--secondary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 95%,
+                rgba(0, 161, 255, 0.05) 96%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 2;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes float-particle {
+            to {
+                transform: translateY(-100vh) translateX(20px);
+            }
+        }
+
+        @keyframes hologramScan {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 0 100vh;
+            }
+        }
+
+        @keyframes containerGlow {
+            0% {
+                box-shadow: 0 0 30px rgba(0, 255, 234, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(0, 161, 255, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(255, 0, 102, 0.2);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+                width: 90%;
+            }
+
+            #main {
+                font-size: 1.5rem;
+            }
+
+            #legend {
+                font-size: 1rem;
+            }
+
+            #qr-image {
+                max-width: 250px;
+            }
         }
     </style>
-    <script>
-        var timeleft = 30;
-        var downloadTimer = setInterval(function () {
-            if (timeleft <= 0) {
-                clearInterval(downloadTimer);
-                document.getElementById("progressBar").remove();
-                document.getElementById("main").innerHTML = "QR Expired! Please reload";
-                document.getElementById("legend").innerHTML = ""
-            }
-            document.getElementById("progressBar").value = 30 - timeleft;
-            timeleft -= 1;
-        }, 1000);
-    </script>
 </head>
 <body>
-<div class="bg">
-    <div id="content">
+    <div class="vip-badge">EDITH-MD QR SCANNER</div>
+    <div class="cyber-grid"></div>
+    <div class="floating-particles" id="particles"></div>
+    <div class="holographic-overlay"></div>
+    <div class="vip-glow"></div>
+    <div class="scanlines"></div>
+
+    <div class="container">
         <div id="QR-content">
             <img id="qr-image" src="/server" alt="QR CODE">
         </div>
         <div id="title-container">
-            <h2 id="main">SHABAN-MD QR </h2>
-            <p class="legend" id="legend">Scan The QR Code</p>
+            <h2 id="main">EDITH-MD</h2>
+            <p id="legend"><i class="fas fa-shield-alt"></i> SCAN THE QR CODE TO CONNECT</p>
         </div>
+        
+        <div class="quote">The secret of success is to be ready when your opportunity comes.</div>
+        
         <div id="description-container">
-            <p id="semi" class="legend"></p>
             <progress value="0" max="30" id="progressBar"></progress>
+            <p id="semi"></p>
+            <a href="javascript:history.go(0)" class="reload-button"><i class="fas fa-sync-alt"></i> REFRESH QR</a>
         </div>
-        <a href="javascript:history.go(0)" class="reload-button">Reload Page</a>
+        <div class="footer">
+            <p>POWERED BY <a href="https://github.com/Bandah-E-Ali/Edith-MD">EDITH-MD QR SYSTEM</a></p>
+        </div>
     </div>
-</div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 1px and 4px
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation duration between 10s and 30s
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // QR timer countdown
+        var timeleft = 30;
+        var downloadTimer = setInterval(function () {
+            if (timeleft <= 0) {
+                clearInterval(downloadTimer);
+                document.getElementById("progressBar").style.display = "none";
+                document.getElementById("main").textContent = "QR EXPIRED!";
+                document.getElementById("legend").innerHTML = '<i class="fas fa-exclamation-triangle"></i> PLEASE REFRESH TO GENERATE NEW QR';
+                document.getElementById("legend").style.color = "#ff5555";
+                document.getElementById("legend").style.animation = "pulse 1s infinite";
+            }
+            document.getElementById("progressBar").value = 30 - timeleft;
+            timeleft -= 1;
+        }, 1000);
+
+        // Initialize particles on load
+        window.addEventListener('load', () => {
+            createParticles();
+            
+            // Add subtle animation to QR code
+            setTimeout(() => {
+                document.getElementById('qr-image').style.transform = "scale(1.02)";
+                setTimeout(() => {
+                    document.getElementById('qr-image').style.transform = "scale(1)";
+                }, 300);
+            }, 500);
+        });
+    </script>
 </body>
-</html>
+    </html>

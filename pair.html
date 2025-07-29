@@ -2,230 +2,438 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHABAN-MD VIP PAIRING</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>EDITH-MD Pairing</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --neon-blue: #00FFEA;
+      --neon-purple: #8A2BE2;
+      --neon-red: #FF2400;
+      --dark-bg: #0a0a15;
+      --darker-bg: #050510;
+      --text-color: #e0e0ff;
+      --fixed-width: 420px;
+      --fixed-height: 600px;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }html, body {
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+    }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #000;
-  position: relative;
-}
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
 
-canvas#bgEffect {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(270deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffee, #0048ff, #8000ff, #ff00fb);
+      background-size: 1600% 1600%;
+      animation: neonRainbow 8s linear infinite alternate;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
 
-.container {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  width: 90%;
-  max-width: 420px;
-}
+    @keyframes neonRainbow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
 
-.container h3 {
-  color: #ffffff;
-  text-shadow: 1px 1px 6px #000;
-  text-align: center;
-  margin-bottom: 1rem;
-}
+    .container {
+      width: 100%;
+      height: 100%;
+      max-width: var(--fixed-width);
+      max-height: var(--fixed-height);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      padding: 20px;
+      margin: auto;
+      position: relative;
+    }
 
-.container h6 {
-  color: #e0e0e0;
-  text-shadow: 1px 1px 3px #000;
-  margin-bottom: 1.2rem;
-  font-weight: normal;
-  text-align: center;
-}
+    .box {
+      width: 100%;
+      height: 100%;
+      padding: 30px 25px;
+      background: rgba(10, 10, 21, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 0 30px var(--neon-blue);
+      border: 2px solid var(--neon-blue);
+      backdrop-filter: blur(8px);
+      position: relative;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      animation: fadeIn 1s ease-in-out;
+    }
 
-.input-container {
-  display: flex;
-  background: #fff;
-  border-radius: 1rem;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  width: 100%;
-}
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
 
-.input-container input {
-  flex: 1;
-  padding: 1rem;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  color: #333;
-}
+    .logo {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      background: linear-gradient(to right, var(--neon-blue), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 15px rgba(0, 255, 234, 0.5);
+      letter-spacing: 3px;
+      font-weight: 900;
+      position: relative;
+      flex-shrink: 0;
+    }
 
-.input-container button {
-  background: linear-gradient(to right, #8a2be2, #4b0082);
-  border: none;
-  color: white;
-  padding: 1rem;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+    .logo::after {
+      content: 'VIP EDITION';
+      position: absolute;
+      top: -10px;
+      right: -25px;
+      font-size: 0.8rem;
+      background: linear-gradient(45deg, var(--neon-red), var(--neon-purple));
+      padding: 2px 10px;
+      border-radius: 15px;
+      color: white;
+      transform: rotate(15deg);
+      box-shadow: 0 0 10px var(--neon-purple);
+    }
 
-.input-container button:hover {
-  background: linear-gradient(to right, #32CD32, #228B22);
-  color: yellow;
-}
+    .tagline {
+      color: var(--neon-blue);
+      font-size: 1rem;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
+      flex-shrink: 0;
+    }
 
-#pair, #waiting-message {
-  color: #fff;
-  text-align: center;
-  margin-top: 1rem;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px #000;
-}
+    .input-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: rgba(20, 20, 40, 0.8);
+      border-radius: 15px;
+      padding: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      margin: 20px 0;
+      flex-shrink: 0;
+    }
 
-#copy {
-  cursor: pointer;
-  font-size: 1.2rem;
-}
+    .input-container:focus-within {
+      border-color: var(--neon-purple);
+      box-shadow: 0 0 25px rgba(138, 43, 226, 0.5);
+    }
 
-@media (max-width: 480px) {
-  .input-container {
-    flex-direction: column;
-  }
+    .input-container input,
+    .input-container button {
+      flex: 1 1 100%;
+      padding: 14px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+    }
 
-  .input-container input,
-  .input-container button {
-    width: 100%;
-    border-radius: 0;
-  }
-}
+    .input-container input {
+      background: rgba(30, 30, 50, 0.9);
+      color: white;
+      text-align: center;
+    }
 
+    .input-container input::placeholder {
+      color: #aaa;
+    }
+
+    .input-container button {
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+      color: black;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 234, 0.5);
+    }
+
+    .input-container button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 25px rgba(0, 255, 234, 0.8);
+      background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue));
+    }
+
+    .result-container {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      border: 1px solid var(--neon-blue);
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 20px rgba(0, 255, 234, 0.2);
+      flex-grow: 1;
+      overflow: auto;
+    }
+
+    #copy {
+      background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 8px 15px;
+      border-radius: 8px;
+      letter-spacing: 2px;
+      position: relative;
+    }
+
+    #copy:hover {
+      text-shadow: 0 0 20px rgba(0, 255, 234, 0.8);
+    }
+
+    .security-badge {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: var(--neon-blue);
+      flex-shrink: 0;
+    }
+
+    .loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 20;
+    }
+
+    .loading div {
+      border: 4px solid var(--neon-blue);
+      border-top: 4px solid var(--neon-purple);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* For very small screens */
+    @media (max-height: 600px) {
+      .container {
+        max-height: 100vh;
+        padding: 10px;
+      }
+      .box {
+        padding: 20px 15px;
+      }
+      .logo {
+        font-size: 1.8rem;
+      }
+      .result-container {
+        min-height: 80px;
+        padding: 15px;
+      }
+    }
+
+    /* For very narrow screens */
+    @media (max-width: 400px) {
+      .container {
+        max-width: 100vw;
+        padding: 10px;
+      }
+      .box {
+        padding: 20px 15px;
+      }
+      .logo {
+        font-size: 1.6rem;
+      }
+      .logo::after {
+        top: -15px;
+        right: -15px;
+        font-size: 0.7rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <canvas id="bgEffect"></canvas>
+
+  <div class="loading">
+    <div></div>
+  </div>
+
   <div class="container">
-    <h3>VIP ACCESS TO SHABAN-MD</h3>
-    <h6>Enter Your WhatsApp Number With Country Code To Get Your Pairing Code</h6>
-    <div class="input-container">
-      <input type="number" id="number" placeholder="+9230593XXXXX">
-      <button id="submit">Pair</button>
+    <div class="box">
+      <div class="logo">EDITH-MD</div>
+      <div class="tagline">WHATSAPP BOT PAIRING SYSTEM</div>
+
+      <div class="input-container">
+        <input type="number" id="number" placeholder="Enter WhatsApp Number with Country Code">
+        <button id="submit"><i class="fas fa-lock-open"></i> PAIR</button>
+      </div>
+
+      <div class="result-container">
+        <main id="pair"></main>
+      </div>
+
+      <div class="security-badge">
+        <i class="fas fa-shield-alt"></i> SECURE CONNECTION
+      </div>
     </div>
-    <div id="waiting-message" style="display:none;">Processing...</div>
-    <main id="pair"></main>
-  </div>  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>  <script>
-    const canvas = document.getElementById("bgEffect");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+  </div>
 
-    let particlesArray = [];
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * 1 - 0.5;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-      }
-      draw() {
-        ctx.fillStyle = 'rgba(0,255,255,0.7)';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function initParticles() {
-      particlesArray = [];
-      for (let i = 0; i < 100; i++) {
-        particlesArray.push(new Particle());
-      }
-    }
-
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particlesArray.forEach(p => {
-        p.update();
-        p.draw();
-      });
-      requestAnimationFrame(animateParticles);
-    }
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      initParticles();
-    });
-
-    initParticles();
-    animateParticles();
-  </script>  <script>
-    const pairOutput = document.getElementById("pair");
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    const pairBox = document.getElementById("pair");
     const submitBtn = document.getElementById("submit");
     const numberInput = document.getElementById("number");
-    const waitingMsg = document.getElementById("waiting-message");
 
-    async function copyCode() {
-      const copyEl = document.getElementById("copy");
-      const original = copyEl.innerText;
-      const codeText = original.replace('CODE: ', '');
-      await navigator.clipboard.writeText(codeText);
-      copyEl.innerText = "COPIED";
-      copyEl.style.color = "blue";
-      setTimeout(() => {
-        copyEl.innerText = original;
-        copyEl.style.color = "red";
-      }, 1000);
+    let isSubmitting = false;
+    let isCodeDisplayed = false;
+
+    async function Copy() {
+      const codeElement = document.getElementById("code");
+      const code = codeElement ? codeElement.innerText : '';
+      
+      try {
+        await navigator.clipboard.writeText(code);
+        
+        // Visual feedback
+        codeElement.innerHTML = '<i class="fas fa-check"></i> COPIED!';
+        codeElement.style.color = "var(--neon-blue)";
+        codeElement.style.textShadow = "0 0 10px var(--neon-blue)";
+        
+        // Revert after 2 seconds
+        setTimeout(() => {
+          codeElement.textContent = code;
+          codeElement.style.color = "var(--neon-blue)";
+          codeElement.style.textShadow = "0 0 5px var(--neon-blue)";
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy: ', err);
+        codeElement.innerHTML = '<i class="fas fa-times"></i> COPY FAILED';
+        codeElement.style.color = "var(--neon-red)";
+      }
     }
 
     submitBtn.addEventListener("click", async (e) => {
       e.preventDefault();
-      const rawNum = numberInput.value.replace(/[^0-9]/g, "");
-      if (!rawNum) {
-        pairOutput.innerHTML = '<p style="color:white">❗Please enter your number.</p>';
+
+      if (isCodeDisplayed) {
+        alert("Please wait for 2 minutes before requesting a new code.");
         return;
       }
-      if (rawNum.length < 11) {
-        pairOutput.innerHTML = '<p style="color:white">❌Invalid number format❌</p>';
+
+      if (isSubmitting) {
+        alert("Please wait for the code before trying to request again.");
         return;
       }
-      waitingMsg.style.display = 'block';
-      pairOutput.innerHTML = '';
-      const { data } = await axios(`/code?number=${rawNum}`);
-      const code = data.code || "Service Unavailable";
-      waitingMsg.style.display = 'none';
-      pairOutput.innerHTML = `<p id="copy" onclick="copyCode()" style="color:red;cursor:pointer;">CODE: <span style="color:white">${code}</span></p>`;
+
+      let raw = numberInput.value.replace(/[^0-9]/g, "");
+      if (!raw) {
+        pairBox.innerHTML = '<span style="color:var(--neon-red);"><i class="fas fa-exclamation-triangle"></i> ENTER VALID WHATSAPP NUMBER</span>';
+      } else if (raw.length < 11) {
+        pairBox.innerHTML = '<span style="color:var(--neon-red);"><i class="fas fa-ban"></i> INVALID NUMBER FORMAT</span>';
+      } else {
+        isSubmitting = true;
+        document.querySelector('.loading').style.display = 'flex';
+
+        try {
+          let { data } = await axios(`/code?number=${raw}`);
+          let code = data.code || "SERVICE_UNAVAILABLE";
+          
+          // Extract only the 8-letter code
+          const pairCode = code.length === 8 ? code : code.match(/[A-Z0-9]{8}/)?.[0] || code;
+          
+          pairBox.innerHTML = `
+            <div style="text-align: center; width: 100%;">
+              <div style="margin-bottom: 10px; color: var(--neon-blue);">PAIR CODE:</div>
+              <div id="code" onclick="Copy()" style="
+                font-size: 1.8rem;
+                color: var(--neon-blue);
+                cursor: pointer;
+                transition: all 0.3s;
+                padding: 5px 10px;
+                border-radius: 5px;
+                background: rgba(0,0,0,0.3);
+                font-family: monospace;
+                letter-spacing: 2px;
+                word-break: break-all;
+              ">${pairCode}</div>
+              <button id="copyb" onclick="Copy()" style="
+                width: 100%;
+                height: 40px;
+                font-size: 16px;
+                color: #000;
+                background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+                border: none;
+                border-radius: 25px;
+                cursor: pointer;
+                margin-top: 15px;
+                transition: background 0.3s ease, transform 0.2s ease-in-out;
+                box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+              ">Copy Code</button>
+            </div>
+          `;
+          isCodeDisplayed = true;
+          setTimeout(() => {
+            isCodeDisplayed = false;
+          }, 120000);
+        } catch (err) {
+          pairBox.innerHTML = '<span style="color:var(--neon-red);"><i class="fas fa-unlink"></i> CONNECTION ERROR - TRY AGAIN</span>';
+        } finally {
+          document.querySelector('.loading').style.display = 'none';
+          isSubmitting = false;
+        }
+      }
     });
-  </script></body>
-</html>
+
+    // Prevent zooming on mobile devices
+    document.addEventListener('gesturestart', function(e) {
+      e.preventDefault();
+    });
+
+    // Ensure content stays within viewport
+    window.addEventListener('resize', function() {
+      document.body.style.zoom = Math.min(
+        window.innerWidth / 420,
+        window.innerHeight / 600,
+        1
+      );
+    });
+
+    // Initial scale calculation
+    window.dispatchEvent(new Event('resize'));
+  </script>
+</body>
+          </html>
