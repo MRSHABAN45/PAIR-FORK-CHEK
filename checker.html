@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHABAN-MD FORK CHECKER</title>
+  <title>SHABAN-MD - FORK CHECKER</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
@@ -16,17 +16,46 @@
       height: 100vh;
       margin: 0;
       font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(270deg, #ff0000, #ff7300, #ffeb00, #00ff00, #00ffff, #0000ff, #8a00ff, #ff00ff);
-      background-size: 300% 300%;
-      animation: rainbowBG 5s infinite alternate;
       color: #fff;
       text-align: center;
       overflow: hidden;
+      position: relative;
+      background-color: #000;
     }
 
-    @keyframes rainbowBG {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
+    /* Rainbow Dots Background */
+    .dots-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      opacity: 0.7;
+      filter: blur(1px);
+      animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-1000px) rotate(720deg) scale(0.5);
+        opacity: 0;
+      }
     }
 
     .container {
@@ -98,9 +127,22 @@
       color: #0ff;
       text-shadow: 0 0 8px #0ff;
     }
+
+    .result a {
+      color: #0ff;
+      text-decoration: none;
+      font-weight: bold;
+      text-shadow: 0 0 5px #0ff;
+    }
+
+    .result a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
+  <!-- Rainbow Dots Background -->
+  <div class="dots-background" id="dotsBackground"></div>
 
   <div class="container">
     <h1>SHABAN-MD - FORK CHECKER</h1>
@@ -112,6 +154,43 @@
   </div>
 
   <script>
+    // Create rainbow dots background
+    function createRainbowDots() {
+      const container = document.getElementById('dotsBackground');
+      const colors = [
+        '#ff0000', '#ff7300', '#ffeb00', '#00ff00',
+        '#00ffff', '#0000ff', '#8a00ff', '#ff00ff'
+      ];
+      
+      // Create 150 dots for better coverage
+      for (let i = 0; i < 150; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        
+        // Random properties
+        const size = Math.random() * 15 + 5;
+        const posX = Math.random() * window.innerWidth;
+        const posY = Math.random() * window.innerHeight + window.innerHeight;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const delay = Math.random() * -20;
+        const duration = Math.random() * 15 + 15;
+        
+        dot.style.width = `${size}px`;
+        dot.style.height = `${size}px`;
+        dot.style.left = `${posX}px`;
+        dot.style.top = `${posY}px`;
+        dot.style.backgroundColor = color;
+        dot.style.animationDelay = `${delay}s`;
+        dot.style.animationDuration = `${duration}s`;
+        
+        container.appendChild(dot);
+      }
+    }
+    
+    // Initialize dots when page loads
+    window.onload = createRainbowDots;
+
+    // Original fork checking function
     async function checkFork() {
       const username = document.getElementById('username').value;
       const resultDiv = document.getElementById('result');
