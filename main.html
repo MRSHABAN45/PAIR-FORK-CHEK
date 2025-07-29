@@ -29,12 +29,9 @@
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
-        /* Neon Rainbow Background */
+        /* Enhanced Live Background */
         body {
             font-family: 'Graduate', sans-serif;
-            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffbb, #0033ff, #a200ff, #ff00a2);
-            background-size: 400% 400%;
-            animation: neonBackground 15s linear infinite;
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -44,12 +41,59 @@
             text-align: center;
             padding: 20px;
             overflow-x: hidden;
+            position: relative;
+            background-color: #000;
         }
 
-        @keyframes neonBackground {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Dynamic Grid Background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+
+        /* Floating Bubbles Background */
+        .bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* Glassmorphism Container */
@@ -263,35 +307,6 @@
             transform: scaleX(1);
         }
 
-        /* Floating Particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: float linear infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
         /* Media Queries for Mobile Optimization */
         @media (max-width: 768px) {
             .container {
@@ -317,48 +332,12 @@
                 padding: 12px 15px;
             }
         }
-
-        /* Loading Animation */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s, visibility 0.5s;
-        }
-
-        .loader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .loader-circle {
-            width: 50px;
-            height: 50px;
-            border: 5px solid transparent;
-            border-top-color: var(--neon-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
-    <div class="loader">
-        <div class="loader-circle"></div>
-    </div>
-
-    <div class="particles" id="particles"></div>
+    <!-- Background Elements -->
+    <div class="grid-background"></div>
+    <div class="bubbles" id="bubbles"></div>
 
     <div class="container">
         <div class="header">SHABAN-MD</div>
@@ -392,42 +371,39 @@
         // Set current year
         document.getElementById("currentYear").textContent = new Date().getFullYear();
         
-        // Create particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = window.innerWidth < 768 ? 30 : 50;
+        // Create floating bubbles
+        function createBubbles() {
+            const bubblesContainer = document.getElementById('bubbles');
+            const bubbleCount = window.innerWidth < 768 ? 15 : 30;
             
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
                 
-                // Random size between 2px and 5px
-                const size = Math.random() * 3 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
+                // Random size between 20px and 100px
+                const size = Math.random() * 80 + 20;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
                 
                 // Random position
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
+                bubble.style.left = `${Math.random() * 100}%`;
                 
                 // Random animation duration
-                const duration = Math.random() * 15 + 10;
-                particle.style.animationDuration = `${duration}s`;
+                const duration = Math.random() * 20 + 10;
+                bubble.style.animationDuration = `${duration}s`;
                 
                 // Random delay
-                particle.style.animationDelay = `${Math.random() * 5}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
                 
-                particlesContainer.appendChild(particle);
+                // Random opacity
+                bubble.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                bubblesContainer.appendChild(bubble);
             }
         }
         
-        // Loading animation
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.querySelector('.loader').classList.add('hidden');
-                createParticles();
-            }, 1000);
-        });
+        // Initialize bubbles when page loads
+        window.addEventListener('load', createBubbles);
         
         // Add ripple effect to buttons
         document.querySelectorAll('.neon-button').forEach(button => {

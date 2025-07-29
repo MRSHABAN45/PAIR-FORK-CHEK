@@ -35,19 +35,100 @@
       justify-content: center;
       align-items: center;
       font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(270deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffee, #0048ff, #8000ff, #ff00fb);
-      background-size: 1600% 1600%;
-      animation: neonRainbow 8s linear infinite alternate;
+      color: var(--text-color);
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
+      background-color: var(--darker-bg);
+      overflow: hidden;
     }
 
-    @keyframes neonRainbow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
+    /* Digital Matrix Background */
+    .matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, rgba(5,5,16,0.9) 0%, rgba(0,0,10,1) 100%);
+    }
+
+    .matrix-column {
+      position: absolute;
+      top: 0;
+      width: 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .matrix-digit {
+      color: rgba(0, 255, 234, 0.2);
+      font-size: 18px;
+      font-family: monospace;
+      opacity: 0;
+      animation: matrixFall linear infinite;
+    }
+
+    @keyframes matrixFall {
+      0% {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.8;
+      }
+      80% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    /* Circuit Board Effect */
+    .circuit-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.1;
+    }
+
+    .circuit-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+      height: 1px;
+      animation: circuitPulse 8s infinite;
+    }
+
+    .circuit-node {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--neon-blue);
+      box-shadow: 0 0 10px var(--neon-blue);
+      animation: nodePulse 3s infinite;
+    }
+
+    @keyframes circuitPulse {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes nodePulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.3); opacity: 0.6; }
     }
 
     .container {
@@ -288,6 +369,10 @@
 </head>
 <body>
 
+  <!-- Digital Background Elements -->
+  <div class="matrix-bg" id="matrixBg"></div>
+  <div class="circuit-lines" id="circuitLines"></div>
+
   <div class="loading">
     <div></div>
   </div>
@@ -314,6 +399,85 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
+    // Create Matrix Background
+    function createMatrixBackground() {
+      const matrixBg = document.getElementById('matrixBg');
+      const columns = Math.floor(window.innerWidth / 20);
+      
+      for (let i = 0; i < columns; i++) {
+        const column = document.createElement('div');
+        column.className = 'matrix-column';
+        column.style.left = `${i * 20}px`;
+        
+        // Random delay for each column
+        column.style.animationDelay = `${Math.random() * 5}s`;
+        
+        // Create digits in each column
+        const digitCount = 30;
+        for (let j = 0; j < digitCount; j++) {
+          const digit = document.createElement('div');
+          digit.className = 'matrix-digit';
+          digit.textContent = Math.floor(Math.random() * 2);
+          
+          // Random animation duration and delay for each digit
+          const duration = 5 + Math.random() * 10;
+          const delay = Math.random() * 5;
+          digit.style.animationDuration = `${duration}s`;
+          digit.style.animationDelay = `${delay}s`;
+          
+          column.appendChild(digit);
+        }
+        
+        matrixBg.appendChild(column);
+      }
+    }
+
+    // Create Circuit Board Lines
+    function createCircuitLines() {
+      const circuitLines = document.getElementById('circuitLines');
+      const lineCount = 15;
+      const nodeCount = 20;
+      
+      // Create horizontal and vertical lines
+      for (let i = 0; i < lineCount; i++) {
+        const line = document.createElement('div');
+        line.className = 'circuit-line';
+        
+        if (Math.random() > 0.5) {
+          // Horizontal line
+          line.style.width = `${Math.random() * 50 + 30}%`;
+          line.style.height = '1px';
+          line.style.left = `${Math.random() * 50}%`;
+          line.style.top = `${Math.random() * 100}%`;
+        } else {
+          // Vertical line
+          line.style.width = '1px';
+          line.style.height = `${Math.random() * 50 + 30}%`;
+          line.style.left = `${Math.random() * 100}%`;
+          line.style.top = `${Math.random() * 50}%`;
+        }
+        
+        line.style.animationDelay = `${Math.random() * 8}s`;
+        circuitLines.appendChild(line);
+      }
+      
+      // Create nodes
+      for (let i = 0; i < nodeCount; i++) {
+        const node = document.createElement('div');
+        node.className = 'circuit-node';
+        node.style.left = `${Math.random() * 100}%`;
+        node.style.top = `${Math.random() * 100}%`;
+        node.style.animationDelay = `${Math.random() * 3}s`;
+        circuitLines.appendChild(node);
+      }
+    }
+
+    // Initialize background effects
+    window.addEventListener('load', function() {
+      createMatrixBackground();
+      createCircuitLines();
+    });
+
     const pairBox = document.getElementById("pair");
     const submitBtn = document.getElementById("submit");
     const numberInput = document.getElementById("number");
