@@ -21,7 +21,7 @@ function removeFile(FilePath) {
 
 // GitHub Fork Check Function
 async function isForked(username) {
-    const GITHUB_TOKEN = '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';
+    const GITHUB_TOKEN = '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';
     try {
         const res = await axios.get(`https://api.github.com/repos/${username}/SHABAN-MD`, {
             headers: {
