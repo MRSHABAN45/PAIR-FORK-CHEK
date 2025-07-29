@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHABAN-MD FORK CHECKER</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(270deg, #ff0000, #ff7300, #ffeb00, #00ff00, #00ffff, #0000ff, #8a00ff, #ff00ff);
+      background-size: 300% 300%;
+      animation: rainbowBG 5s infinite alternate;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    @keyframes rainbowBG {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #0ff;
+      width: 90%;
+      max-width: 400px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #0ff;
+      text-shadow: 0 0 8px #0ff;
+      margin-bottom: 10px;
+    }
+
+    .main input {
+      width: 100%;
+      height: 45px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #0ff;
+      border-radius: 25px;
+      color: #0ff;
+      font-size: 16px;
+      text-align: center;
+      outline: none;
+      margin-bottom: 15px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .main input:focus {
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    .main button {
+      width: 100%;
+      height: 45px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #000;
+      background: linear-gradient(135deg, #0ff, #00f);
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+    }
+
+    .main button:hover {
+      background: linear-gradient(135deg, #00f, #0ff);
+      box-shadow: 0 0 15px #0ff;
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #0ff;
+      text-shadow: 0 0 8px #0ff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>SHABAN-MD - FORK CHECKER</h1>
+    <div class="main">
+      <input type="text" id="username" placeholder="Enter GitHub Username">
+      <button onclick="checkFork()">Check Fork</button>
+      <div class="result" id="result"></div>
+    </div>
+  </div>
+
+  <script>
+    async function checkFork() {
+      const username = document.getElementById('username').value;
+      const resultDiv = document.getElementById('result');
+
+      if (!username) {
+        resultDiv.textContent = "Please enter a username.";
+        resultDiv.style.color = "red";
+        return;
+      }
+
+      const owner = "MRSHABAN45"; 
+      const repo = "SHABAN-MD";          
+
+      try {
+        let page = 1;
+        let isForked = false;
+
+        while (true) {
+          const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/forks?per_page=100&page=${page}`);
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+          }
+
+          const forks = await response.json();
+          if (forks.length === 0) break; 
+
+          if (forks.some(fork => fork.owner.login.toLowerCase() === username.toLowerCase())) {
+            isForked = true;
+            break;
+          }
+          page++; 
+        }
+
+        if (isForked) {
+          resultDiv.textContent = `Yes, ${username} has forked the repository. Wait...`;
+          resultDiv.style.color = "green";
+          setTimeout(() => {
+            window.location.href = "../qr"; 
+          }, 2000);
+        } else {
+          resultDiv.innerHTML = `No, ${username} has NOT forked the repository. Please <a href="https://github.com/${owner}/${repo}/fork" target="_blank">fork it here</a>.`;
+          resultDiv.style.color = "orange";
+        }
+      } catch (error) {
+        resultDiv.textContent = `An error occurred: ${error.message}`;
+        resultDiv.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
