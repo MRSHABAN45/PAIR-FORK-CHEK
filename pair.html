@@ -4,72 +4,109 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SHABAN-MD VIP PAIRING</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     html, body {
-      height: 100%; overflow: hidden;
+      height: 100%;
+      overflow: hidden;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     body {
-      display: flex; justify-content: center; align-items: center;
-      background: #000; position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      position: relative;
     }
     canvas#bgEffect {
-      position: absolute; top: 0; left: 0; z-index: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
     }
     .container {
-      position: relative; z-index: 1;
-      display: flex; flex-direction: column; align-items: center;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       background: rgba(255, 255, 255, 0.1);
-      padding: 2rem; border-radius: 20px;
+      padding: 2rem;
+      border-radius: 20px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      width: 90%; max-width: 420px;
+      width: 90%;
+      max-width: 420px;
     }
     .container h3 {
-      color: #ffffff; text-shadow: 1px 1px 6px #000;
-      text-align: center; margin-bottom: 1rem;
+      color: #ffffff;
+      text-shadow: 1px 1px 6px #000;
+      text-align: center;
+      margin-bottom: 1rem;
     }
     .container h6 {
-      color: #e0e0e0; text-shadow: 1px 1px 3px #000;
-      margin-bottom: 1.2rem; font-weight: normal; text-align: center;
+      color: #e0e0e0;
+      text-shadow: 1px 1px 3px #000;
+      margin-bottom: 1.2rem;
+      font-weight: normal;
+      text-align: center;
     }
     .input-container {
-      display: flex; background: #fff;
-      border-radius: 1rem; overflow: hidden;
-      margin-bottom: 1rem; width: 100%;
+      display: flex;
+      background: #fff;
+      border-radius: 1rem;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      width: 100%;
     }
     .input-container input {
-      flex: 1; padding: 1rem;
-      border: none; outline: none;
-      font-size: 1rem; color: #333;
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      color: #333;
     }
     .input-container button {
       background: linear-gradient(to right, #8a2be2, #4b0082);
-      border: none; color: white;
-      padding: 1rem; font-size: 1rem; font-weight: bold;
-      cursor: pointer; transition: background 0.3s ease;
+      border: none;
+      color: white;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
     .input-container button:hover {
       background: linear-gradient(to right, #32CD32, #228B22);
       color: yellow;
     }
     #pair, #waiting-message {
-      color: #fff; text-align: center;
-      margin-top: 1rem; font-weight: bold;
+      color: #fff;
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: bold;
       text-shadow: 1px 1px 2px #000;
     }
     #copy {
-      cursor: pointer; font-size: 1.2rem;
+      cursor: pointer;
+      font-size: 1.2rem;
     }
     @media (max-width: 480px) {
-      .input-container { flex-direction: column; }
+      .input-container {
+        flex-direction: column;
+      }
       .input-container input,
       .input-container button {
-        width: 100%; border-radius: 0;
+        width: 100%;
+        border-radius: 0;
       }
     }
   </style>
@@ -78,16 +115,13 @@
   <canvas id="bgEffect"></canvas>
   <div class="container">
     <h3>VIP ACCESS TO SHABAN-MD</h3>
-    <h6>Enter Your GitHub Username & WhatsApp Number To Get Your Pairing Code</h6>
+    <h6>Enter Your WhatsApp Number With Country Code And GitHub Username</h6>
 
-    <!-- GitHub username input -->
-    <div class="input-container">
-      <input type="text" id="github" placeholder="GitHub Username">
-    </div>
-
-    <!-- WhatsApp number input -->
     <div class="input-container">
       <input type="number" id="number" placeholder="+9230593XXXXX">
+    </div>
+    <div class="input-container">
+      <input type="text" id="username" placeholder="GitHub Username">
       <button id="submit">Pair</button>
     </div>
 
@@ -95,14 +129,14 @@
     <main id="pair"></main>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <!-- Particle BG effect -->
   <script>
     const canvas = document.getElementById("bgEffect");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     let particlesArray = [];
+
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -127,12 +161,17 @@
 
     function initParticles() {
       particlesArray = [];
-      for (let i = 0; i < 100; i++) particlesArray.push(new Particle());
+      for (let i = 0; i < 100; i++) {
+        particlesArray.push(new Particle());
+      }
     }
 
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particlesArray.forEach(p => { p.update(); p.draw(); });
+      particlesArray.forEach(p => {
+        p.update();
+        p.draw();
+      });
       requestAnimationFrame(animateParticles);
     }
 
@@ -146,11 +185,13 @@
     animateParticles();
   </script>
 
+  <!-- Axios and Pairing Logic -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
     const pairOutput = document.getElementById("pair");
     const submitBtn = document.getElementById("submit");
     const numberInput = document.getElementById("number");
-    const githubInput = document.getElementById("github");
+    const usernameInput = document.getElementById("username");
     const waitingMsg = document.getElementById("waiting-message");
 
     async function copyCode() {
@@ -168,16 +209,16 @@
 
     submitBtn.addEventListener("click", async (e) => {
       e.preventDefault();
-
       const rawNum = numberInput.value.replace(/[^0-9]/g, "");
-      const githubUser = githubInput.value.trim();
+      const username = usernameInput.value.trim();
 
-      if (!githubUser) {
-        pairOutput.innerHTML = '<p style="color:white">❗Please enter your GitHub username.</p>';
+      if (!rawNum || !username) {
+        pairOutput.innerHTML = '<p style="color:white">❗Please enter both number and GitHub username.</p>';
         return;
       }
-      if (!rawNum || rawNum.length < 11) {
-        pairOutput.innerHTML = '<p style="color:white">❌Please enter a valid WhatsApp number.</p>';
+
+      if (rawNum.length < 11) {
+        pairOutput.innerHTML = '<p style="color:white">❌Invalid number format❌</p>';
         return;
       }
 
@@ -185,21 +226,13 @@
       pairOutput.innerHTML = '';
 
       try {
-        await axios.get(`https://api.github.com/repos/${githubUser}/SHABAN-MD`);
-      } catch (err) {
-        waitingMsg.style.display = 'none';
-        pairOutput.innerHTML = '<p style="color:white">❌ You must fork SHABAN-MD repo first on your GitHub ❌</p>';
-        return;
-      }
-
-      try {
-        const { data } = await axios(`/code?number=${rawNum}&username=${githubUser}`);
+        const { data } = await axios(`/code?number=${rawNum}&username=${username}`);
         const code = data.code || "Service Unavailable";
-        waitingMsg.style.display = 'none';
         pairOutput.innerHTML = `<p id="copy" onclick="copyCode()" style="color:red;cursor:pointer;">CODE: <span style="color:white">${code}</span></p>`;
-      } catch (error) {
+      } catch (err) {
+        pairOutput.innerHTML = `<p style="color:white">❌ ${err?.response?.data?.error || 'An error occurred'} ❌</p>`;
+      } finally {
         waitingMsg.style.display = 'none';
-        pairOutput.innerHTML = `<p style="color:white">❌ Error fetching code ❌</p>`;
       }
     });
   </script>
